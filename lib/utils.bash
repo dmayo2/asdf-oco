@@ -42,7 +42,8 @@ download_release() {
 	filename="$2"
 
 	# TODO: Adapt the release URL convention for oco
-	url="$GH_REPO/blob/main/archive/v${version}.tar.gz"
+	# https://github.com/dmayo2/asdf-oco/raw/main/archive/v1.0.2.tar.gz
+	url="$GH_REPO/raw/main/archive/v${version}.tar.gz"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
