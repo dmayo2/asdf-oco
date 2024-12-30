@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Set environment variables if required
+export OPENCOMMIT_API_KEY="${OPENCOMMIT_API_KEY:-}"

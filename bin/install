@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -e
+source "$(dirname "$0")/../lib/utils.bash"
 
-current_script_path=${BASH_SOURCE[0]}
-plugin_dir=$(dirname "$(dirname "$current_script_path")")
+install_dir="$ASDF_INSTALL_PATH/bin"
 
-# shellcheck source=./lib/utils.bash
-source "${plugin_dir}/lib/utils.bash"
+# Check OS and architecture
+os=$(get_os)
+arch=$(get_arch)
 
-install_version "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
+# Download OpenCommit binary
+version=$1
+echo "Installing opencommit $version..."
+url="https://github.com/di-sukharev/opencommit/releases/download/${version}/opencommit-${os}-${arch}"
+download_file "$url" "$install_dir/opencommit"
+
+# Make it executable
+chmod +x "$install_dir/opencommit"

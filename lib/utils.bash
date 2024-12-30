@@ -42,7 +42,7 @@ download_release() {
 	filename="$2"
 
 	# TODO: Adapt the release URL convention for oco
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	url="$GH_REPO/archive/v${version}.tar"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
@@ -71,4 +71,22 @@ install_version() {
 		rm -rf "$install_path"
 		fail "An error occurred while installing $TOOL_NAME $version."
 	)
+}
+
+get_os() {
+  uname | tr '[:upper:]' '[:lower:]'
+}
+
+get_arch() {
+  case "$(uname -m)" in
+    x86_64) echo "amd64" ;;
+    arm64) echo "arm64" ;;
+    *) echo "unknown"; exit 1 ;;
+  esac
+}
+
+download_file() {
+  local url="$1"
+  local output="$2"
+  curl -L "$url" -o "$output"
 }
